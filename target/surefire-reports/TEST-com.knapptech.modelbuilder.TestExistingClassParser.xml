@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite failures="0" time="0.001" errors="0" skipped="0" tests="1" name="com.knapptech.modelbuilder.TestProduct">
+<testsuite failures="0" time="0.056" errors="0" skipped="0" tests="1" name="com.knapptech.modelbuilder.TestExistingClassParser">
   <properties>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
     <property name="sun.boot.library.path" value="C:\Program Files\Java\jdk1.6.0_24\jre\bin"/>
@@ -59,5 +59,5 @@
     <property name="sun.desktop" value="windows"/>
     <property name="sun.cpu.isalist" value="amd64"/>
   </properties>
-  <testcase time="0" classname="com.knapptech.modelbuilder.TestProduct" name="testProduct"/>
+  <testcase time="0.025" classname="com.knapptech.modelbuilder.TestExistingClassParser" name="testParse"/>
 </testsuite>
