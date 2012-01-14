@@ -5,32 +5,71 @@ xmlns:tns="http://modelfactory.knapptech.com/ModelDefinition"
 elementFormDefault="qualified">
 	<element name="project" type="tns:project" />
 	<complexType name="project">
+		<annotation>
+			<documentation>
+			The project represents your java project, it can contain packages, classes, interfaces, and enums only.
+			</documentation>
+		</annotation>
 		<sequence>
 			<element name="defaults" type="tns:defaults" minOccurs="0" maxOccurs="1"/>
 			<group ref="tns:pckg"/>
 		</sequence>
-		<attribute name="name" type="string" use="required" />
+		<attribute name="name" type="string" use="required" >
+			<annotation>
+				<documentation>This will be the name of your project.</documentation>
+			</annotation>
+		</attribute>
 	</complexType>
 	<complexType name="package">
+		<annotation>
+			<documentation>Represents a java package.  This can contain other packages, classes, interfaces, and enums only.</documentation>
+		</annotation>
 		<sequence>
 			<group ref="tns:pckg"/>
 		</sequence>
-		<attribute name="name" type="string"/>
+		<attribute name="name" type="string">
+			<annotation>
+				<documentation>The name of your java package.  Do not use the fully qualified name, just its local name
+				 will do.  In other words, the name should not have a period in it.</documentation>
+			</annotation>
+		</attribute>
 	</complexType>
 	<complexType name="interface">
+		<annotation>
+			<documentation>Represents a java interface, so it can only contain a list of required methods.
+			It can extend other interfaces.  All fields you add here will automatically be public static and 
+			final fields, because that is all an interface can support.</documentation>
+		</annotation>
 		<sequence>
-			<element name="extends" type="tns:type" minOccurs="0" maxOccurs="unbounded"></element>
+			<element name="extends" type="tns:type" minOccurs="0" maxOccurs="unbounded">
+				
+			</element>
 			<group ref="tns:fieldsandmethods"></group>
 		</sequence>
-		<attribute name="name" type="string" use="required" />
+		<attribute name="name" type="string" use="required" >
+			<annotation>
+				<documentation>The name of your interface.  Do not use the fully qualified name, just use the local
+				name.  Do not add generic parameters in the name, put that in a generic parameter block instead.</documentation>
+			</annotation>
+		</attribute>
 	</complexType>
 	<complexType name="enum">
+		<annotation>
+			<documentation>Represents a java enum, so it is like a class except it cannot extend anything
+			(but implicitly extends java.lang.Enum).  You add enum instances to this, which are like public
+			static final fields whose type matches the enum type.</documentation>
+		</annotation>
 		<sequence>
 			<element name="implements" type="tns:type" minOccurs="0" maxOccurs="unbounded"/>
 			<element name="enuminstance" type="tns:enuminstance" minOccurs="0" maxOccurs="unbounded" />
 			<group ref="tns:fieldsandmethods"></group>
 		</sequence>
-		<attribute name="name" type="string"/>
+		<attribute name="name" type="string" >
+			<annotation>
+				<documentation>The name of your enum.  Do not use the fully qualified name, just use the local
+				name.</documentation>
+			</annotation>
+		</attribute>
 		<attribute name="visibility" type="tns:visibility" default="public" use="optional"/>
 	</complexType>
 	<complexType name="enuminstance">
@@ -41,18 +80,41 @@ elementFormDefault="qualified">
 		<attribute name="initializer" type="string"/>
 	</complexType>
 	<complexType name="class">
+		<annotation>
+			<documentation>
+				This represents more or less an "idea" rather than a java class.  The strategy you use
+				decides what it generates.  Using the "bean" strategy will generate one java class, while 
+				other strategies can produce multiple classes and interfaces.  The main purpose here is 
+				to group a set of fields that are part of a common idea.
+			</documentation>
+		</annotation>
 		<sequence>
-			<element name="comment" type="string" minOccurs="0" maxOccurs="1" />
+			<element name="comment" type="string" minOccurs="0" maxOccurs="1" >
+				<annotation><documentation>A javadoc comment to be placed above your class.</documentation></annotation>
+			</element>
 			<element name="genericparameter" type="tns:genericparameter" minOccurs="0" maxOccurs="unbounded" />
 			<element name="implements" type="tns:type" minOccurs="0" maxOccurs="unbounded"/>
 			<group ref="tns:fieldsandmethods"></group>
 			<group ref="tns:c"/>
 			<element name="extends" type="tns:type" minOccurs="0" maxOccurs="1" />
 		</sequence>
-		<attribute name="name" type="string" use="required"/>
-		<attribute name="strategy" type="tns:strategy" default="extensible" use="optional"/>
+		<attribute name="name" type="string" use="required" >
+			<annotation>
+				<documentation>The name of your class.  Do not use the fully qualified name, just use the local
+				name.  Do not include generic parameters, those belong in the genericparameter element that the
+				xml element can contain.  So this field should not contain a period or greater/less than symbols.</documentation>
+			</annotation>
+		</attribute>
+		<attribute name="strategy" type="tns:strategy" default="extensible" use="optional"><annotation>
+		<documentation>The strategy that should be used to generate the class(es).  This can control whether
+		the class is immutable, a factory, a singleton, a java bean, and many more things.</documentation> </annotation></attribute>
 		<attribute name="abstract" type="boolean" default="false" use="optional"/>
-		<attribute name="visibility" type="tns:visibility" default="public" use="optional"/>
+		<attribute name="visibility" type="tns:visibility" default="public" use="optional">
+			<annotation>
+				<documentation>The visibility of your class.  Only use public or packageprivate here,
+				other options will not compile because it is not valid in java.</documentation>
+			</annotation>
+		</attribute>
 	</complexType>
 	<complexType name="genericparameter">
 		<sequence>
@@ -78,6 +140,22 @@ elementFormDefault="qualified">
 		</restriction>
 	</simpleType>
 	<complexType name="requiredmethod">
+		<annotation>
+			<documentation>
+				Represents a method that must be supported by your class or interface.  You can define
+				the return type, visibility, javadoc comments, and any number of arguments that are 
+				required.  Classes that are not abstract will get a stub for this required method.  The 
+				stub will compile, but will not do what you want it to.  There will be a "TODO" line comment
+				so that the stub shows up on your list of tasks.  The developer must write the code for 
+				the stub after it has been generated.  Do not write any required method elements for 
+				getters, setters, equals, hashcode, or compareTo.  Those methods are already taken care 
+				of by other means.  Getters and setters will be automatically created depending on the
+				strategy you use, and the attribute value of "gettable" and "settable" on the field.
+				Equals and Hashcode are always overridden, they choose fields to use based on all fields
+				that are marked "unique".  By default, every field is considered unique, you must set 
+				them false if you don't want them used in equals, hashcode, and compareTo.
+			</documentation>
+		</annotation>
 		<all>
 			<element name="comment" type="string" minOccurs="0" maxOccurs="1" />
 			<element name="returnType" type="tns:type" minOccurs="0"/>
@@ -91,36 +169,213 @@ elementFormDefault="qualified">
 		<attribute name="abstract" type="boolean" default="false"/>
 		<attribute name="overrides" type="boolean" default="false"/>
 		<attribute name="final" type="boolean" default="false"/>
-		<attribute name="modifiesClass" type="boolean" default="true"/>
+		<attribute name="modifiesClass" type="boolean" default="true">
+			<annotation><documentation>This specifies if the method is a mutator or not.  
+			Mutators will change the internal state of the class, probably changing the result
+			of hashcode and equals too.  The strategy might determine how to write a class based
+			on whether a method is a mutator or not.  For example, the immutable interfaces
+			will never include mutator methods, but bean type interfaces will.</documentation> </annotation>
+		</attribute>
 	</complexType>
 	<complexType name="field">
+		<annotation>
+			<documentation>
+				Represents a field in your class.  This can contain much more information than
+				the typical java field contains.  For example, it knows if the field is "unique"
+				which means that the field is part of what makes the class unique (it's part of 
+				equals and hashcode).  You can also control a lot of how the field works, such 
+				as if it's settable, gettable, visible, static, and many other things.
+			</documentation>
+		</annotation>
 		<all>
-			<element name="comment" type="string" minOccurs="0" maxOccurs="1" />
-			<element name="type" type="tns:type" minOccurs="0"/>
-			<element name="initializer" type="string" minOccurs="0"/>
+			<element name="comment" type="string" minOccurs="0" maxOccurs="1" >
+				<annotation>
+				<documentation>A javadoc comment for the field.</documentation>
+				</annotation>
+			</element>
+			<element name="type" type="tns:type" minOccurs="0">
+				<annotation>
+				<documentation>The type that this field is.  Can be any type.  For example,
+				a primitive type, a primitive wrapper, or any object, even objects you are 
+				defining in the xml file.  The type you refer to must either be on the 
+				classpath when you run the application, or defined in the xml file somewhere.
+				The order you define types does not matter, the application will find what you
+				refer to.</documentation>
+				</annotation>
+			</element>
+			<element name="initializer" type="string" minOccurs="0">
+				<annotation>
+					<documentation>An initializer for your field, in other words, the text you 
+					want after the equals sign.  Do not include an equals sign or semicolon in
+					this text, that is already taken care of.  If you need to use a generic 
+					parameter, the &quot;&amp;gt;&quot; and &quot;&amp;lt;&quot; instead of
+					 &quot;&gt;&quot; and &quot;&lt;&quot;.</documentation>
+				</annotation>
+			</element>
 		</all>
 		<attribute name="name" use="required" type="tns:fieldName"/>
 		<attribute name="array" use="optional" type="boolean"/>
-		<attribute name="type" use="optional" type="string"/>
+		<attribute name="type" use="optional" type="string">
+			<annotation>
+				<documentation>Lets you specify the type this field is.  This is an alternative 
+				to having a type block element inside this element.  Do not use both the attribute
+				and the element.  The attribute is easier to use, but is more limited.  For example,
+				you cannot have generic parameters in the attribute, you must use the type element
+				for that instead.  Also, you must use the fully qualified name of the class you
+				refer to in the type attribute.  Note &quot;String&quot; is invalid, you must 
+				use &quot;java.lang.String&quot;.</documentation>
+			</annotation>
+		</attribute>
 		<attribute name="static" type="boolean" default="false"/>
 		<attribute name="visibility" type="tns:visibility" default="private"/>
 		<attribute name="gettable" type="boolean" default="true"/>
 		<attribute name="settable" type="boolean" default="true"/>
-		<attribute name="addable" type="boolean" default="true"/>
-		<attribute name="removable" type="boolean" default="true"/>
-		<attribute name="incrementable" type="boolean" default="true"/>
-		<attribute name="decrementable" type="boolean" default="true"/>
-		<attribute name="serializable" type="boolean" default="true"/>
-		<attribute name="comparable" type="boolean" default="true"/>
-		<attribute name="unique" type="boolean" default="true"/>
-		<attribute name="synchronized" type="boolean" default="false"/>
-		<attribute name="abstract" type="boolean" default="false"/>
-		<attribute name="overrides" type="boolean" default="false"/>
-		<attribute name="final" type="boolean" default="false"/>
-		<attribute name="compareOrder" type="positiveInteger" default="99"/>
-		<attribute name="key" type="boolean" default="false"/>
-		<attribute name="nullable" type="boolean" default="true"/>
-		<attribute name="immutable" type="boolean" default="false"/>
+		<attribute name="addable" type="boolean" default="true">
+			<annotation>
+				<documentation>
+				For collection types, this means that it will write a method 
+				to add a member to the field.  For non-collection types, this has 
+				no significance.
+				</documentation>
+			</annotation>
+		</attribute>
+		<attribute name="removable" type="boolean" default="true">
+			<annotation>
+				<documentation>
+				For collection types, this means that it will write a method 
+				to remove a member from the field.  For non-collection types, this has 
+				no significance.
+				</documentation>
+			</annotation>
+		</attribute>
+		<attribute name="incrementable" type="boolean" default="true">
+			<annotation>
+				<documentation>
+				For integer types, this means that the application will include a method
+				to increment the field.  For other types, this has no significane.
+				</documentation>
+			</annotation>
+		</attribute>
+		<attribute name="decrementable" type="boolean" default="true">
+			<annotation>
+				<documentation>
+				For integer types, this means that the application will include a method
+				to decrement the field.  For other types, this has no significane.
+				</documentation>
+			</annotation>
+		</attribute>
+		<attribute name="serializable" type="boolean" default="true">
+			<annotation>
+				<documentation>
+				For classes that are serializable, this means that the field
+				is not transient.  Set this to false to make the field transient.
+				</documentation>
+			</annotation>
+		</attribute>
+		<attribute name="comparable" type="boolean" default="true">
+			<annotation>
+				<documentation>
+					This means that the field can be used in the compareTo method, if this
+					class is comparable.  The application will also check that the type
+					is indeed comparable.  It will also check that the compare order is
+					between one and twelve, anything else will be treated as a not comparable 
+					field.  By default, all fields have comparable set to true, while compareOrder
+					is 99, so the field is actually considered not comparable.  So be sure that
+					if you want the field used in compareTo, set the compareOrder attribute.
+				</documentation>
+			</annotation>
+		</attribute>
+		<attribute name="unique" type="boolean" default="true">
+			<annotation>
+				<documentation>
+					This means that the field is part of what makes the class unique.  In other
+					words, it will be used in the equals and hashCode methods.  If a field is not
+					unique, it is not part of the equals of hashCode methods.  All unique fields
+					must match between two class instances for them to be considered equal.
+					Unique fields are also occasionally used to define constructors, especially for
+					immutable classes.  They might also be used to define a &quot;key&quot; for 
+					the class, so it can be used in a HashMap.
+				</documentation>
+			</annotation>
+		</attribute>
+		<attribute name="synchronized" type="boolean" default="false">
+			<annotation>
+				<documentation>
+					This means that all methods which access the field (getters and setters) must 
+					also be synchronized.
+				</documentation>
+			</annotation>
+		</attribute>
+		<attribute name="abstract" type="boolean" default="false">
+			<annotation>
+				<documentation>
+					This means that the methods that relate to this field (getters and setters) must
+					be marked abstract.
+				</documentation>
+			</annotation>
+		</attribute>
+		<attribute name="overrides" type="boolean" default="false">
+			<annotation>
+				<documentation>
+					
+				</documentation>
+			</annotation>
+		</attribute>
+		<attribute name="final" type="boolean" default="false">
+			<annotation>
+				<documentation>
+					This means that the field will be marked final.
+				</documentation>
+			</annotation>
+		</attribute>
+		<attribute name="compareOrder" type="positiveInteger" default="99">
+			<annotation>
+				<documentation>
+					This is the compareOrder for the field.  Must be between one and 
+					twelve to be considered valid.  Other values are equivalent to saying
+					the field is not comparable.  By default this is 99, meaning that if 
+					you don't explicitly set this, the field is not going to be used
+					in the compareTo method.  Fields with a lower compare order will be
+					compared first, and will trump all fields with a higher compare order.
+					If the comparison between the first field of two instances returns zero,
+					the compareTo method will check the next field in the compare order.
+					Please note, you must not have a field with a valid compare order that 
+					is not unique.  This will break the contract rule that compareTo == 0 
+					when the two instances are equal.
+				</documentation>
+			</annotation>
+		</attribute>
+		<attribute name="key" type="boolean" default="false">
+			<annotation>
+				<documentation>
+					This marks whether or not the field is a key.  If it is a key, it must
+					also be unique, but the reverse is not necessarily true.  The key is
+					what's used for looking up the object in a HashMap usually.  
+				</documentation>
+			</annotation>
+		</attribute>
+		<attribute name="nullable" type="boolean" default="true">
+			<annotation>
+				<documentation>
+					Records whether or not the field may be null.  When false, the setters and constructors
+					will have code in them automatically, that checks for null
+					values and throws an exception in that scenario.  This also means that the 
+					constructors will all require having that value as an input (or having it defined 
+					some other way).  For a bean class, setting nullable to true will break its 
+					contract, because there will no longer be a no argument constructor.  This will
+					still generate useful code though, it just won't technically be a java bean.
+				</documentation>
+			</annotation>
+		</attribute>
+		<attribute name="immutable" type="boolean" default="false">
+			<annotation>
+				<documentation>
+					Records whether or not the field can be changed.  In some special cases, a field
+					should not be final, but should still not be mutable.  So we leave this as an 
+					option in that scenario.  The setter method will not be written for this field.
+				</documentation>
+			</annotation>
+		</attribute>
 	</complexType>
 	<complexType name="arguments">
 		<sequence>
@@ -135,13 +390,57 @@ elementFormDefault="qualified">
 		<attribute name="type" use="optional" type="string"/>
 	</complexType>
 	<complexType name="type">
+		<annotation>
+			<documentation>
+			Represents a type in java.  This can be a primitive, a primitive wrapper, 
+			a class, an interface, an abstract class, etc.  For primitive wrappers, be sure
+			to use the fully qualified name.  Use &quot;java.lang.Integer&quot; not &quot;Integer&quot;
+			</documentation>
+		</annotation>
 		<sequence>
-			<element name="type" type="string" minOccurs="0"/>
-			<element name="generictype" type="tns:type" minOccurs="0" maxOccurs="unbounded"/>
-			<element name="defaultImplementation" type="tns:type" minOccurs="0" maxOccurs="1"/>
+			<element name="type" type="string" minOccurs="0">
+				<annotation>
+					<documentation>The fully qualified name of the type you refer to, or the primitive type
+					name.  Primitives must use a lower case letter: &quot;int&quot; not &quot;Int&quot;.
+					Do not include generic parameters in this block, those belong in the generictype block 
+					instead.</documentation>
+				</annotation>
+			</element>
+			<element name="generictype" type="tns:type" minOccurs="0" maxOccurs="unbounded">
+				<annotation>
+					<documentation>This is used to specify any number of generic type parameters
+					that this type includes.  These can be any other type, though primitives will
+					obviously produce code that does not compile.  You can even have nested generic 
+					types.  For example, you can have 
+					&quot;java.util.List&lt;java.util.List&lt;java.lang.Integer&gt;&gt;&quot;
+					
+					</documentation>
+				</annotation>
+			</element>
+			<element name="defaultImplementation" type="tns:type" minOccurs="0" maxOccurs="1">
+				<annotation>
+					<documentation>Currently unused, not sure if it ever will be.</documentation>
+				</annotation>
+			</element>
 		</sequence>
-		<attribute name="type" type="string" use="optional" />
-		<attribute name="arrayDimensions" type="int" default="0" use="optional"/>
+		<attribute name="type" type="string" use="optional">
+			<annotation>
+				<documentation>
+				The fully qualified name of the type.  This is an alternative to using the type element.
+				This makes it much easier to specify the type, while sacrificing the ability to have
+				generic parameters in the type.  This attribute should not have any generic parameters.
+				</documentation>
+			</annotation>
+		</attribute>
+		<attribute name="arrayDimensions" type="int" default="0" use="optional">
+			<annotation>
+				<documentation>Specifies how many dimensions there are to this array type.
+				Note that the xml will be valid if you have a collection type and array dimensions
+				greater than zero, but the generated code will not compile.  By default this is
+				zero.  Currently no limit to the number of array dimensions.  Do not confuse this 
+				with the length of the array, that's a completely separate idea.</documentation>
+			</annotation>
+		</attribute>
 	</complexType>
 	
 	
