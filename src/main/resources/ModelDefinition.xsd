@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" 
+targetNamespace="http://modelfactory.knapptech.com/ModelDefinition" 
+xmlns:tns="http://modelfactory.knapptech.com/ModelDefinition" 
+elementFormDefault="qualified">
+	<element name="project" type="tns:project" />
+	<complexType name="project">
+		<sequence>
+			<element name="defaults" type="tns:defaults" minOccurs="0" maxOccurs="1"/>
+			<group ref="tns:pckg"/>
+		</sequence>
+		<attribute name="name" type="string" use="required" />
+	</complexType>
+	<complexType name="package">
+		<sequence>
+			<group ref="tns:pckg"/>
+		</sequence>
+		<attribute name="name" type="string"/>
+	</complexType>
+	<complexType name="interface">
+		<sequence>
+			<element name="extends" type="tns:type" minOccurs="0" maxOccurs="unbounded"></element>
+			<group ref="tns:fieldsandmethods"></group>
+		</sequence>
+		<attribute name="name" type="string" use="required" />
+	</complexType>
+	<complexType name="enum">
+		<sequence>
+			<element name="implements" type="tns:type" minOccurs="0" maxOccurs="unbounded"/>
+			<element name="enuminstance" type="tns:enuminstance" minOccurs="0" maxOccurs="unbounded" />
+			<group ref="tns:fieldsandmethods"></group>
+		</sequence>
+		<attribute name="name" type="string"/>
+		<attribute name="visibility" type="tns:visibility" default="public" use="optional"/>
+	</complexType>
+	<complexType name="enuminstance">
+		<sequence>
+			<element name="parameter" type="string" minOccurs="0" maxOccurs="unbounded"/>
+		</sequence>
+		<attribute name="name" type="string"/>
+		<attribute name="initializer" type="string"/>
+	</complexType>
+	<complexType name="class">
+		<sequence>
+			<element name="comment" type="string" minOccurs="0" maxOccurs="1" />
+			<element name="genericparameter" type="tns:genericparameter" minOccurs="0" maxOccurs="unbounded" />
+			<element name="implements" type="tns:type" minOccurs="0" maxOccurs="unbounded"/>
+			<group ref="tns:fieldsandmethods"></group>
+			<group ref="tns:c"/>
+			<element name="extends" type="tns:type" minOccurs="0" maxOccurs="1" />
+		</sequence>
+		<attribute name="name" type="string" use="required"/>
+		<attribute name="strategy" type="tns:strategy" default="extensible" use="optional"/>
+		<attribute name="abstract" type="boolean" default="false" use="optional"/>
+		<attribute name="visibility" type="tns:visibility" default="public" use="optional"/>
+	</complexType>
+	<complexType name="genericparameter">
+		<sequence>
+			<element name="upperbounds" type="tns:type" minOccurs="0" maxOccurs="1" />
+			<element name="lowerbounds" type="tns:type" minOccurs="0" maxOccurs="1" />
+		</sequence>
+		<attribute name="representation" type="string" use="required"/>
+	</complexType>
+	<simpleType name="strategy">
+		<restriction base="string">
+			<enumeration value="bean"/><!-- just a java bean -->
+			<enumeration value="immutable"/><!-- just an immutable java class -->
+			<enumeration value="beanandinterface"/><!-- a bean version and its interface. -->
+			<enumeration value="immutableandinterface"/><!-- an immutable version, and readonly interface -->
+			<enumeration value="extensible"/><!-- both interfaces, a bean, and an immutable version -->
+			<enumeration value="extensibleslave"/><!-- both interfaces, a bean, and an immutable version -->
+			<enumeration value="singleton"/><!-- a singleton member -->
+			<enumeration value="singletonandinterface"/><!-- a singleton member, and its interface. -->
+			<enumeration value="managed"/><!-- make all interfaces, bean, immutable, and singleton members. -->
+			<enumeration value="factory"/><!-- make all interfaces, bean, immutable, and singleton members. -->
+			<enumeration value="locking"/><!-- make all interfaces, bean, immutable, and singleton members. -->
+			<enumeration value="unlocking"/><!-- make all interfaces, bean, immutable, and singleton members. -->
+		</restriction>
+	</simpleType>
+	<complexType name="requiredmethod">
+		<all>
+			<element name="comment" type="string" minOccurs="0" maxOccurs="1" />
+			<element name="returnType" type="tns:type" minOccurs="0"/>
+			<element name="arguments" type="tns:arguments" minOccurs="0"/>
+		</all>
+		<attribute name="name" type="string" use="required"/>
+		<attribute name="returnType" type="string" use="optional"/>
+		<attribute name="visibility" type="tns:visibility" default="public"/>
+		<attribute name="static" type="boolean" default="false"/>
+		<attribute name="synchronized" type="boolean" default="false"/>
+		<attribute name="abstract" type="boolean" default="false"/>
+		<attribute name="overrides" type="boolean" default="false"/>
+		<attribute name="final" type="boolean" default="false"/>
+		<attribute name="modifiesClass" type="boolean" default="true"/>
+	</complexType>
+	<complexType name="field">
+		<all>
+			<element name="comment" type="string" minOccurs="0" maxOccurs="1" />
+			<element name="type" type="tns:type" minOccurs="0"/>
+			<element name="initializer" type="string" minOccurs="0"/>
+		</all>
+		<attribute name="name" use="required" type="tns:fieldName"/>
+		<attribute name="array" use="optional" type="boolean"/>
+		<attribute name="type" use="optional" type="string"/>
+		<attribute name="static" type="boolean" default="false"/>
+		<attribute name="visibility" type="tns:visibility" default="private"/>
+		<attribute name="gettable" type="boolean" default="true"/>
+		<attribute name="settable" type="boolean" default="true"/>
+		<attribute name="addable" type="boolean" default="true"/>
+		<attribute name="removable" type="boolean" default="true"/>
+		<attribute name="incrementable" type="boolean" default="true"/>
+		<attribute name="decrementable" type="boolean" default="true"/>
+		<attribute name="serializable" type="boolean" default="true"/>
+		<attribute name="comparable" type="boolean" default="true"/>
+		<attribute name="unique" type="boolean" default="true"/>
+		<attribute name="synchronized" type="boolean" default="false"/>
+		<attribute name="abstract" type="boolean" default="false"/>
+		<attribute name="overrides" type="boolean" default="false"/>
+		<attribute name="final" type="boolean" default="false"/>
+		<attribute name="compareOrder" type="positiveInteger" default="99"/>
+		<attribute name="key" type="boolean" default="false"/>
+		<attribute name="nullable" type="boolean" default="true"/>
+		<attribute name="immutable" type="boolean" default="false"/>
+	</complexType>
+	<complexType name="arguments">
+		<sequence>
+			<element name="argument" type="tns:argument" minOccurs="0" maxOccurs="unbounded"/>
+		</sequence>
+	</complexType>
+	<complexType name="argument">
+		<all>
+			<element name="type" type="tns:type" minOccurs="0"/>
+		</all>
+		<attribute name="name" use="required" type="tns:fieldName"/>
+		<attribute name="type" use="optional" type="string"/>
+	</complexType>
+	<complexType name="type">
+		<sequence>
+			<element name="type" type="string" minOccurs="0"/>
+			<element name="generictype" type="tns:type" minOccurs="0" maxOccurs="unbounded"/>
+			<element name="defaultImplementation" type="tns:type" minOccurs="0" maxOccurs="1"/>
+		</sequence>
+		<attribute name="type" type="string" use="optional" />
+		<attribute name="arrayDimensions" type="int" default="0" use="optional"/>
+	</complexType>
+	
+	
+	<complexType name="defaults">
+		<sequence>
+			<element name="language" type="string" />
+			<element name="mergeStrategy" type="tns:mergeStrategy" />
+		</sequence>
+	</complexType>
+	<simpleType name="fieldName">
+		<restriction base="string">
+			<pattern value="([a-zA-Z0-9$_])*"></pattern>
+		</restriction>
+	</simpleType>
+	<simpleType name="visibility">
+		<restriction base="string">
+			<enumeration value="public"></enumeration>
+			<enumeration value="protected"></enumeration>
+			<enumeration value=""></enumeration>
+			<enumeration value="package"></enumeration>
+			<enumeration value="packageprivate"></enumeration>
+			<enumeration value="private"></enumeration>
+		</restriction>
+	</simpleType>
+	<group name="pckg" >
+		<sequence>
+			<element name="comment" type="string" minOccurs="0" maxOccurs="1" />
+			<element name="package" type="tns:package" minOccurs="0" maxOccurs="unbounded"/>
+			<group ref="tns:c"></group>
+		</sequence>
+	</group>
+	<group name="c">
+		<sequence>
+			<element name="interface" type="tns:interface"  minOccurs="0" maxOccurs="unbounded"/>
+			<element name="enum" type="tns:enum"  minOccurs="0" maxOccurs="unbounded"/>
+			<element name="class" type="tns:class"  minOccurs="0" maxOccurs="unbounded"/>
+		</sequence>
+	</group>
+	<simpleType name="mergeStrategy">
+		<restriction base="string">
+			<enumeration value="overwrite" />
+			<enumeration value="merge" />
+			<enumeration value="newonly" />
+			<enumeration value="startnew" />
+			<enumeration value="safe" />
+			<enumeration value="stoponconflict" />
+		</restriction>
+	</simpleType>
+	
+	<group name="fieldsandmethods">
+		<sequence>
+			<element name="field" type="tns:field" minOccurs="0" maxOccurs="unbounded"/>
+			<element name="requiredmethod" type="tns:requiredmethod" minOccurs="0" maxOccurs="unbounded"/>
+		</sequence>
+	</group>
+</schema>

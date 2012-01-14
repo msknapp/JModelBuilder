@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!ELEMENT project (defaults?,package*,interface*,enum*,class*)>
+<!ELEMENT defaults EMPTY >
+<!ELEMENT package (package*,interface*,enum*,class*)>
+<!ELEMENT class (implements*,field*,requiredMethod*,interface*,enum*,class*)>
+<!ELEMENT interface (field*,requiredMethod*)>
+<!ELEMENT enum (field*,requiredMethod*,enumInstance*)>
+<!ELEMENT requiredMethod (type?,argument*)>
+<!ELEMENT field (type?)>
+<!ELEMENT type (type*) >
+<!ELEMENT argument (type?) >
+<!ELEMENT implements EMPTY>
+<!ELEMENT enumInstance EMPTY>
+<!ATTLIST project id CDATA "" >
+<!ATTLIST project name CDATA #REQUIRED>
+<!ATTLIST project programmingLanguage CDATA #REQUIRED>
+<!ATTLIST defaults id CDATA "" >
+<!ATTLIST defaults author CDATA "" >
+<!ATTLIST defaults includeIncrementMethod (true|false) "true" >
+<!ATTLIST defaults includeDecrementMethod (true|false) "true" >
+<!ATTLIST defaults includeAddMethod (true|false) "true" >
+<!ATTLIST defaults includeRemoveMethod (true|false) "true" >
+<!ATTLIST defaults includeJavadocs (true|false) "true" >
+<!ATTLIST package id CDATA "" >
+<!ATTLIST package name CDATA #REQUIRED>
+<!ATTLIST class id CDATA "" >
+<!ATTLIST class name CDATA #REQUIRED>
+<!ATTLIST class inherits CDATA "Object">
+<!ATTLIST class abstract (true|false) "false" >
+<!ATTLIST class comparable (true|false) "true">
+<!ATTLIST class serializable (true|false) "true">
+<!ATTLIST class final (true|false) "false">
+<!ATTLIST class static (true|false) "false">
+<!ATTLIST interface id CDATA "" >
+<!ATTLIST interface name CDATA #REQUIRED >
+<!ATTLIST enum id CDATA "" >
+<!ATTLIST enum name CDATA #REQUIRED >
+<!ATTLIST implements id CDATA "" >
+<!ATTLIST implements name CDATA #REQUIRED >
+<!ATTLIST requiredMethod id CDATA "" >
+<!ATTLIST requiredMethod name CDATA #REQUIRED >
+<!ATTLIST requiredMethod returnType CDATA "">
+<!ATTLIST requiredMethod visibility (public|protected|packageprivate|private) "public">
+<!ATTLIST requiredMethod static (true|false) "false" >
+<!ATTLIST requiredMethod synchronized (true|false) "false" >
+<!ATTLIST requiredMethod abstract (true|false) "false" >
+<!ATTLIST requiredMethod overrides (true|false) "false" >
+<!ATTLIST requiredMethod modifiesClass (true|false) "true" >
+<!ATTLIST requiredMethod final (true|false) "false">
+<!ATTLIST field id CDATA "" >
+<!ATTLIST field type CDATA "" >
+<!ATTLIST field visibility (public|protected|packageprivate|private) "private">
+<!ATTLIST field gettable (true|false) "true" >
+<!ATTLIST field settable (true|false) "true" >
+<!ATTLIST field addable (true|false) "true" >
+<!ATTLIST field removable (true|false) "true">
+<!ATTLIST field incrementable (true|false) "true">
+<!ATTLIST field decrementable (true|false) "true">
+<!ATTLIST field serializable (true|false) "true">
+<!ATTLIST field name CDATA #REQUIRED>
+<!ATTLIST field unique (true|false) "true">
+<!ATTLIST field compareOrder (-1|0|1|2|3|4|5|6|7|8|9|10|11|12) "-1">
+<!ATTLIST field static (true|false) "false" >
+<!ATTLIST field synchronized (true|false) "false" >
+<!ATTLIST field abstract (true|false) "false" >
+<!ATTLIST field overrides (true|false) "false" >
+<!ATTLIST field final (true|false) "false">
+<!ATTLIST field defaultValue CDATA "null">
+<!ATTLIST argument id CDATA "" >
+<!ATTLIST argument name CDATA "" >
+<!ATTLIST argument type CDATA "" >
+<!ATTLIST argument final (true|false) "false">
+<!ATTLIST type id CDATA "" >
+<!ATTLIST type name CDATA "" >
+<!ATTLIST type arrayDimensions (0|1|2|3|4) "0" >
+<!ATTLIST enumInstance id CDATA "" >
+<!ATTLIST enumInstance name CDATA "" >

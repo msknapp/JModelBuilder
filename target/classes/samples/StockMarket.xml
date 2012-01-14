@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://modelfactory.knapptech.com/ModelDefinition"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="http://modelfactory.knapptech.com/ModelDefinition ModelDefinition.xsd" 
+name="StockMarket">
+	<defaults>
+		<language>java</language>
+		<mergeStrategy>merge</mergeStrategy>
+	</defaults>
+	<package name="com">
+		<package name="knapptech" >
+			<package name="stockmarket">
+				<interface name="ITradeable">
+					<requiredmethod name="getPrice" returnType="double">
+						<arguments>
+							<argument name="date" type="java.util.Calendar" />
+						</arguments>
+					</requiredmethod>
+				</interface>
+				<class name="Company" strategy="extensible">
+					<implements type="com.knapptech.stockmarket.ITradeable"/>
+					<field name="ticker" type="java.lang.String" nullable="false" immutable="true" compareOrder="1"/>
+					<field name="priceHistory" type="com.knapptech.stockmarket.PriceHistory"/>
+				</class>
+				<class name="PriceHistory" strategy="singleton">
+					<field name="ticker" type="java.lang.String" nullable="false" immutable="true" compareOrder="1"/>
+					<field name="prices">
+						<type>
+							<type>java.util.List</type>
+							<generictype type="com.knapptech.stockmarket.PriceRecord"/>
+						</type>
+					</field>
+				</class>
+				<class name="PriceRecord" strategy="immutable">
+					<field name="date" type="java.util.Calendar" nullable="false" compareOrder="1" />
+					<field name="price" type="java.lang.Double" nullable="false" />
+				</class>
+				<class name="CarFactory" strategy="managed">
+					<field name="model" type="java.lang.String" immutable="true" key="true" compareOrder="1"/>
+					<field name="year" type="int" immutable="true" compareOrder="2"/>
+				</class>
+			</package>
+			<package name="math">
+				<class name="Pair" strategy="bean">
+					<genericparameter representation="E"></genericparameter>
+					<field name="first" type="com.knapptech.math.Pair.E"/>
+					<field name="second" type="com.knapptech.math.Pair.E"/>
+				</class>
+				<class name="MyArray">
+					<field name="thearray" type="int" array="true" />
+				</class>
+			</package>
+		</package>
+	</package>
+</project>

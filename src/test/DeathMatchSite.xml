@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE project SYSTEM "ModelDefinition.dtd">
+<project name="DeathMatch">
+	<defaults>
+	
+	</defaults>
+	<package name="com">
+		<package name="knapptech">
+			<package name="autogen">
+				<package name="deathmatch">
+					<class name="Player" >
+						<field name="name" type="String" compareOrder="0"/>
+						<field name="inventory" type="com.knapptech.autogen.deathmatch.PlayerInventory" />
+						<field name="health" type="byte" />
+						<field name="armor" type="byte" />
+						<field name="transform" type="com.knapptech.autogen.deathmatch.Transform" />
+					</class>
+					<class name="Transform" >
+						<field name="position" type="com.knapptech.autogen.shape.Vector3"></field>
+						<field name="rotation" type="com.knapptech.autogen.shape.Vector4"></field>
+						<field name="localScale" type="com.knapptech.autogen.shape.Vector3"></field>
+					</class>
+					<class name="PlayerInventory">
+						<field name="guns" type="java.util.List&lt;com.knapptech.autogen.deathmatch.Gun&gt;" />
+					</class>
+					<class name="Gun">
+						<field name="type" type="com.knapptech.autogen.deathmatch.GunType" compareOrder="0"/>
+						<field name="ammo" type="double" />
+					</class>
+					<class name="GunType">
+						<field name="reloadtime" type="double" />
+						<field name="name" type="String" compareOrder="0"/>
+						<field name="damage" type="byte" />
+					</class>
+					
+					<class name="Ammo">
+						<field name="gunType" type="com.knapptech.autogen.deathmatch.GunType" />
+					
+					</class>
+					<class name="Level" >
+					
+					
+					</class>
+				</package>
+				<package name="shape">
+					<class name="Vector2">
+						<field name="x" type="float"></field>
+						<field name="y" type="float"></field>
+					</class>
+					<class name="Vector3" inherits="com.knapptech.autogen.shape.Vector2">
+						<field name="z" type="float"></field>
+					</class>
+					<class name="Vector4" inherits="com.knapptech.autogen.shape.Vector3">
+						<field name="w" type="float"></field>
+					</class>
+					<class name="Ray">
+						<field name="startPoint" type="com.knapptech.autogen.shape.Vector3" />
+						<field name="direction" type="com.knapptech.autogen.shape.Vector3" />
+					</class>
+					<class name="LineSegment">
+						<field name="startPoint" type="com.knapptech.autogen.shape.Vector3" />
+						<field name="endPoint" type="com.knapptech.autogen.shape.Vector3" />
+					</class>
+					<class name="Triangle">
+						<field name="startPoint" type="com.knapptech.autogen.shape.Vector3" />
+						<field name="middlePoint" type="com.knapptech.autogen.shape.Vector3" />
+						<field name="endPoint" type="com.knapptech.autogen.shape.Vector3" />
+					</class>
+					<class name="Mesh">
+						<field name="vertices" type="java.util.List&lt;com.knapptech.autogen.shape.Vector3&gt;" />
+					
+					</class>
+				</package>
+				<package name="model" >
+					<class name="Image">
+						<field name="pixels" type="java.util.List&lt;com.knapptech.autogen.model.Color&gt;" />
+						<field name="width" type="int" />
+						<field name="height" type="int" />
+					</class>
+					<class name="Color">
+						<field name="red" type="byte" />
+						<field name="green" type="byte" />
+						<field name="blue" type="byte" />
+					</class>
+				</package>
+			</package>
+		</package>
+	</package>
+</project>

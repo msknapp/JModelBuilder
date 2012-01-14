@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://modelfactory.knapptech.com/ModelDefinition"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="http://modelfactory.knapptech.com/ModelDefinition ModelDefinition.xsd" 
+name="StockMarket">
+	<defaults>
+		<language>java</language>
+		<mergeStrategy>merge</mergeStrategy>
+	</defaults>
+	<package name="com">
+		<package name="knapptech">
+			<package name="world">
+				<class name="LandMass" strategy="extensible">
+					<field name="countries">
+						<type type="java.util.List">
+							<generictype>com.knapptech.world.ICountry</generictype>
+						</type>
+					</field>
+				</class>
+				<class name="Country" strategy="extensible">
+					
+				</class>
+				<class name="Continent">
+					<extends>com.knapptech.world.AbstractLandMass</extends>
+					<implements>com.knapptech.world.LandMass</implements>
+					
+				</class>
+				<class name="Ocean" strategy="extensible">
+					
+				
+				</class>
+				
+			</package>
+		</package>
+	</package>
+</project>

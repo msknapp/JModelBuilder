@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE project SYSTEM "ModelDefinition.dtd">
+<project name="ModelFactory" programmingLanguage="java">
+	<defaults />
+	<package name="com">
+		<package name="knapptech">
+			<package name="modelfactory">
+				<package name="model">
+					<package name="autogen">
+						<class name="MFEnum">
+							<field name="id" type="String" />
+							<field name="name" type="String" compareOrder="0" />
+							<field name="package" type="com.knapptech.modelfactory.model.autogen.MFPackage" />
+							<field name="imports" type="java.util.Set&lt;com.knapptech.modelfactory.model.autogen.MFImport&gt;" />
+							<field name="fields" type="java.util.Set&lt;com.knapptech.modelfactory.model.autogen.MFField&gt;" />
+							<field name="requiredMethods" type="java.util.Set&lt;com.knapptech.modelfactory.model.autogen.MFMethod&gt;" />
+							<field name="instances" type="java.util.TreeSet&lt;com.knapptech.modelfactory.model.autogen.MFEnumInstance&gt;" />
+							<field name="isInner" type="boolean" />
+							<field name="ownerClass" type="com.knapptech.modelfactory.model.autogen.MFClass" />
+							<field name="visibility" type="com.knapptech.modelfactory.model.autogen.MFVisibility" compareOrder="1" />
+						</class>
+						<class name="MFEnumInstance" >
+							<field name="id" type="String" />
+							<field name="name" type="String" compareOrder="0" />
+							<field name="constructorValues" type="java.util.List&lt;String&gt;" />
+						</class>
+						<class name="MFArgument" >
+							<field name="id" type="String" />
+							<field name="name" type="String" />
+							<field name="type" type="com.knapptech.modelfactory.model.autogen.MFType" />
+							<field name="isFinal" type="boolean" />
+							<field name="varArgs" type="boolean" />
+						</class>
+						<class name="MFClass" >
+							<field name="id" type="String" />
+							<field name="name" type="String" />
+							<field name="inheritsClassFullName" type="String" />
+							<field name="inheritsType" type="com.knapptech.modelfactory.model.autogen.MFInherits" />
+							<field name="package" type="com.knapptech.modelfactory.model.autogen.MFPackage" />
+							<field name="isStatic" type="boolean" />
+							<field name="isAbstract" type="boolean" />
+							<field name="isComparable" type="boolean" />
+							<field name="isSerializable" type="boolean" />
+							<field name="isFinal" type="boolean" />
+							<field name="isInner" type="boolean" />
+							<field name="interfacesImplemented" type="java.util.Set&lt;com.knapptech.modelfactory.model.autogen.MFImplements&gt;" />
+							<field name="imports" type="java.util.Set&lt;com.knapptech.modelfactory.model.autogen.MFImport&gt;" />
+							<field name="fields" type="java.util.Set&lt;com.knapptech.modelfactory.model.autogen.MFField&gt;" />
+							<field name="requiredMethods" type="java.util.Set&lt;com.knapptech.modelfactory.model.autogen.MFMethod&gt;" />
+							<field name="innerInterfaces" type="java.util.Set&lt;com.knapptech.modelfactory.model.autogen.MFInterface&gt;" />
+							<field name="innerEnums" type="java.util.Set&lt;com.knapptech.modelfactory.model.autogen.MFEnum&gt;" />
+							<field name="innerClasses" type="java.util.Set&lt;com.knapptech.modelfactory.model.autogen.MFClass&gt;" />
+							<field name="ownerClass" type="com.knapptech.modelfactory.model.autogen.MFClass" />
+							<field name="visibility" type="com.knapptech.modelfactory.model.autogen.MFVisibility" compareOrder="1" />
+						</class>
+						<class name="MFPackage" >
+							<field name="id" type="String" />
+							<field name="name" type="String" />
+							<field name="parent" type="com.knapptech.modelfactory.model.autogen.MFPackage" />
+							<field name="interfaces" type="java.util.Set&lt;com.knapptech.modelfactory.model.autogen.MFInterface&gt;" />
+							<field name="enums" type="java.util.Set&lt;com.knapptech.modelfactory.model.autogen.MFEnum&gt;" />
+							<field name="classes" type="java.util.Set&lt;com.knapptech.modelfactory.model.autogen.MFClass&gt;" />
+							<field name="subPackages" type="java.util.Set&lt;com.knapptech.modelfactory.model.autogen.MFPackage&gt;" />
+							
+						</class>
+						<class name="MFInterface">
+							<field name="id" type="String" />
+							<field name="name" type="String" compareOrder="0" />
+							<field name="constants" type="java.util.Set&lt;com.knapptech.modelfactory.model.autogen.MFField&gt;" />
+							<field name="requiredMethods" type="java.util.Set&lt;com.knapptech.modelfactory.model.autogen.MFMethod&gt;" />
+							<field name="package" type="com.knapptech.modelfactory.model.autogen.MFPackage" />
+							<field name="imports" type="java.util.Set&lt;com.knapptech.modelfactory.model.autogen.MFImport&gt;" />
+							<field name="visibility" type="com.knapptech.modelfactory.model.autogen.MFVisibility" compareOrder="1" />
+							<field name="inheritsFrom" type="java.util.Set&lt;com.knapptech.modelfactory.model.autogen.MFInterface&gt;" />
+							<field name="isInner" type="boolean" />
+							<field name="ownerClass" type="com.knapptech.modelfactory.model.autogen.MFClass" />
+						</class>
+						<class name="MFProject">
+							<field name="id" type="String" />
+							<field name="language" type="com.knapptech.modelfactory.model.autogen.MFLanguage" />
+							<field name="defaults" type="com.knapptech.modelfactory.model.autogen.MFDefaults" />
+							<field name="interfaces" type="java.util.Set&lt;com.knapptech.modelfactory.model.autogen.MFInterface&gt;" />
+							<field name="enums" type="java.util.Set&lt;com.knapptech.modelfactory.model.autogen.MFEnum&gt;" />
+							<field name="classes" type="java.util.Set&lt;com.knapptech.modelfactory.model.autogen.MFClass&gt;" />
+							<field name="rootPackages" type="java.util.Set&lt;com.knapptech.modelfactory.model.autogen.MFPackage&gt;" />
+						</class>
+						<class name="MFMethodLine">
+							<field name="line" type="String" />
+							<field name="requiresSemiColon" type="boolean" />
+							<field name="startsBlock" type="boolean" />
+							<field name="EndsBlock" type="boolean" />
+						</class>
+						<class name="MFVisibility">
+							<field name="visibility" type="String" />
+						</class>
+						<class name="MFClassStereotype">
+							<field name="name" type="String" />
+						</class>
+						<class name="MFLanguage">
+							<field name="name" type="String" compareOrder="0" />
+						</class>
+						<class name="MFImport">
+							<field name="importType" type="com.knapptech.modelfactory.model.autogen.MFType" compareOrder="0"/>
+						</class>
+						<class name="MFDefaults">
+							<field name="id" type="String" />
+							<field name="mainDefaults" type="com.knapptech.modelfactory.model.autogen.MFDefaults" static="true" />
+							<field name="author" type="String" />
+							<field name="includeIncrementMethod" type="boolean" />
+							<field name="includeDecrementMethod" type="boolean" />
+							<field name="includeAddMethod" type="boolean" />
+							<field name="includeRemoveMethod" type="boolean" />
+							<field name="includeJavadoc" type="boolean" />
+						</class>
+						<class name="MFMember">
+							<field name="id" type="String" />
+							<field name="ownerClass" type="com.knapptech.modelfactory.model.autogen.MFClass" />
+							<field name="name" type="String" compareOrder="0" />
+							<field name="visibility" type="com.knapptech.modelfactory.model.autogen.MFVisibility" compareOrder="1" />
+						</class>
+						<class name="MFConstructor" inherits="com.knapptech.modelfactory.model.autogen.MFMember">
+							<field name="lines" type="java.util.List&lt;com.knapptech.modelfactory.model.autogen.MFMethodLine&gt;" />
+							<field name="arguments" type="java.util.List&lt;com.knapptech.modelfactory.model.autogen.MFArgument&gt;" />
+						</class>
+						<class name="MFField" inherits="com.knapptech.modelfactory.model.autogen.MFMember">
+							<field name="compareOrder" type="int" compareOrder="0" />
+							<field name="isGettable" type="boolean" />
+							<field name="isSettable" type="boolean" />
+							<field name="isIncrementable" type="boolean" />
+							<field name="isDecrementable" type="boolean" />
+							<field name="isSerializable" type="boolean" />
+							<field name="isUnique" type="boolean" />
+							<field name="compareOrder" type="byte" />
+							<field name="type" type="com.knapptech.modelfactory.model.autogen.MFType" />
+							<field name="isStatic" type="boolean" />
+							<field name="isFinal" type="boolean" />
+						</class>
+						<class name="MFMethod" inherits="com.knapptech.modelfactory.model.autogen.MFMember">
+							<field name="isModifyingClass" type="boolean" />
+							<field name="isSynchronized" type="boolean" />
+							<field name="returnType" type="com.knapptech.modelfactory.model.autogen.MFType" />
+							<field name="isOverrides" type="boolean" />
+							<field name="isAbstract" type="boolean" />
+							<field name="lines" type="java.util.List&lt;com.knapptech.modelfactory.model.autogen.MFMethodLine&gt;" />
+							<field name="isStatic" type="boolean" />
+							<field name="isFinal" type="boolean" />
+							<field name="arguments" type="java.util.List&lt;com.knapptech.modelfactory.model.autogen.MFArgument&gt;" />
+						</class>
+						<class name="MFImplements">
+							<field name="id" type="String" />
+							<field name="implementedInterface" type="com.knapptech.modelfactory.model.autogen.MFInterface" compareOrder="0" />
+						</class>
+						<class name="MFInherits">
+							<field name="id" type="String" />
+							<field name="superClass" type="com.knapptech.modelfactory.model.autogen.MFClass" compareOrder="0" />
+						</class>
+						<class name="MFType">
+							<field name="id" type="String" />
+							<field name="nameWithoutMultiples" type="String" />
+							<field name="nameWithMultiples" type="String" />
+							<field name="fullNameWithoutMultiples" type="String" />
+							<field name="fullNameWithMultiples" type="String" />
+							<field name="multiplesPart" type="String" />
+							<field name="typeClass" type="java.lang.Class" />
+							<field name="typeMFClass" type="com.knapptech.modelfactory.model.autogen.MFClass" />
+							<field name="innerGenerics" type="java.util.List&lt;com.knapptech.modelfactory.model.autogen.MFType&gt;" />
+							<field name="primitive" type="boolean" />
+							<field name="wrapper" type="boolean" />
+							<field name="collection" type="boolean" />
+							<field name="isAbstract" type="boolean" />
+							<field name="isInterface" type="boolean" />
+							<field name="owner" type="Object" />
+							<field name="byte" type="arrayDimensionSize" />
+						</class>
+					</package>
+				</package>
+				<package name="control">
+					<package name="autogen">
+						<class name="MFParser">
+						
+						</class>
+						<class name="ModelFactory" >
+						
+						</class>
+						<class name="MFClassRegistry" >
+							<field name="classes" static="true" type="java.util.Set&lt;com.knapptech.modelfactory.model.autogen.MFClass&gt;" />
+						</class>
+						<class name="MFTypeRegistry" >
+							<field name="types" static="true" type="java.util.Set&lt;com.knapptech.modelfactory.model.autogen.MFType&gt;" />
+						</class>
+					</package>
+				</package>
+				<package name="view">
+				</package>
+			</package>
+		</package>
+	</package>
+</project>

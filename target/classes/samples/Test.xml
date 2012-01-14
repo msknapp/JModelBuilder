@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://modelfactory.knapptech.com/ModelDefinition"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="http://modelfactory.knapptech.com/ModelDefinition ModelDefinition.xsd" 
+name="ExampleProject">
+	<defaults>
+		<language>java</language>
+		<mergeStrategy>merge</mergeStrategy>
+	</defaults>
+	<package name="com">
+		<package name="knapptech">
+			<package name="example">
+				<interface name="IPhysicalThing">
+					<requiredmethod name="getLocation" returnType="java.lang.String"></requiredmethod>
+				</interface>
+				<interface name="IAnimal" >
+					<extends>
+						<type>com.knapptech.example.IPhysicalThing</type>
+					</extends>
+					<requiredmethod name="run" returnType="int"></requiredmethod>
+				</interface>
+				<class name="PhysicalThing" strategy="bean" abstract="true">
+					<implements><type>com.knapptech.example.IPhysicalThing</type></implements>
+					<requiredmethod name="fall" abstract="true"></requiredmethod>
+				</class>
+				<class name="Animal" strategy="bean" abstract="true">
+					<implements><type>com.knapptech.example.IAnimal</type></implements>
+					<field name="name" type="java.lang.String" nullable="false" />
+					<requiredmethod name="move" abstract="true" ><returnType type="java.lang.String"/></requiredmethod>
+					
+					<requiredmethod name="mate" abstract="true" >
+						<arguments>
+							<argument name="other" type="com.knapptech.example.IPhysicalThing"/>
+						</arguments>
+					</requiredmethod>
+					<extends><type>com.knapptech.example.PhysicalThing</type></extends>
+				</class>
+				<class name="Monkey" strategy="bean">
+					<extends type="com.knapptech.example.Animal" />
+				</class>
+				<class name="Michael" strategy="singleton">
+					<field name="firstname" type="java.lang.String"/>
+					<field name="money" type="int" />
+				</class>
+			</package>
+		</package>
+	</package>
+</project>

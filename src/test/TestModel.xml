@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE project SYSTEM "ModelDefinition.dtd">
+<project name="words">
+	<defaults>
+	
+	</defaults>
+	<package name="com">
+		<package name="knapptech">
+			<package name="wordmodel">
+				<class name="Document">
+					<field name="paragraphs" type="java.util.List&lt;com.knapptech.wordmodel.Paragraph&gt;" />
+					<field name="author" type="com.knapptech.user.User" />
+					<field name="creationDate" type="java.util.Calendar" />
+					<field name="lastUpdate" type="java.util.Calendar" />
+				</class>
+				<class name="Paragraph">
+					<field name="sentences" type="java.util.List&lt;com.knapptech.wordmodel.Sentence&gt;" />
+					<field name="document" type="com.knapptech.wordmodel.Document" />
+					
+				</class>
+				<class name="Sentence">
+					<field name="words" type="java.util.List&lt;com.knapptech.wordmodel.SentencePart&gt;" />
+					<field name="paragraph" type="com.knapptech.wordmodel.Paragraph" />
+				</class>
+				<class name="SentencePart">
+					<field name="text" type="String" />
+					<field name="val" type="int" />
+					<field name="sentence" type="com.knapptech.wordmodel.Sentence" />
+					
+				</class> 
+			</package>
+			<package name="user">
+				<class name="User">
+					<field name="firstName" type="String" />
+					<field name="lastName" type="String" />
+					<field name="password" type="char[]" />
+					<field name="loginName" type="String" />
+				</class>
+				
+			</package>
+		</package>
+	</package>
+</project>

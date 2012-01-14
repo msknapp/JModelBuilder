@@ -1,0 +1,294 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://modelfactory.knapptech.com/ModelDefinition"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="http://modelfactory.knapptech.com/ModelDefinition ModelDefinition.xsd" 
+name="Weird">
+	<defaults>
+		<language>java</language>
+		<mergeStrategy>merge</mergeStrategy>
+	</defaults>
+	<package name="com">
+		<package name="knapptech">
+			<package name="primitives">
+				<comment>Tests primitives</comment>
+				<class name="PrimitiveApe" strategy="extensible">
+					<comment>This is a class that has all primitives.</comment>
+					<field name="myByte" type="byte">
+						<comment>You found my byte!</comment>
+					</field>
+					<field name="myChar" type="char"/>
+					<field name="myDouble" type="double"/>
+					<field name="myFloat" type="float"/>
+					<field name="myLong" type="long"/>
+					<field name="myInt" type="int"/>
+					<field name="myBoolean" type="boolean"/>
+				</class>
+				<class name="MadWrapper" strategy="extensible">
+					<comment>This is a class that has all primitive wrappers.</comment>
+					<field name="myByte" type="java.lang.Byte"/>
+					<field name="myChar" type="java.lang.Character"/>
+					<field name="myDouble" type="java.lang.Double"/>
+					<field name="myFloat" type="java.lang.Float"/>
+					<field name="myLong" type="java.lang.Long"/>
+					<field name="myInt" type="java.lang.Integer"/>
+					<field name="myBoolean" type="java.lang.Boolean"/>
+				</class>
+				<class name="KungFooBarMaster">
+					<field name="myCal" type="java.util.Calendar" />
+					<field name="myList">
+						<type>
+							<type>java.util.List</type>
+							<generictype type="com.knapptech.weird.Yoyo" />
+						</type>
+					</field>
+				</class>
+			</package>
+			<package name="interfaces">
+				<interface name="Lolo1">
+					<field name="AMAZING" type="int">
+						<initializer>10</initializer>
+					</field>
+					<requiredmethod name="doSomething" returnType="java.lang.Object"/>
+				</interface>
+				<interface name="Lolo2">
+					<extends type="com.knapptech.interfaces.Lolo1"/>
+				</interface>
+				<interface name="Yippee">
+					<requiredmethod name="actAFool" returnType="java.lang.Thread" ></requiredmethod>
+				</interface>
+			</package>
+			<package name="inners">
+				
+			</package>
+			<package name="enums">
+				<enum name="DiceRolls">
+					<enuminstance name="ONE" >
+						<parameter>1</parameter>
+					</enuminstance>
+					<enuminstance name="TWO" >
+						<parameter>2</parameter>
+					</enuminstance>
+					<enuminstance name="FOUR" >
+						<parameter>4</parameter>
+					</enuminstance>
+					<field name="value" type="int"/>
+				</enum>
+			</package>
+			<package name="generics">
+			
+			</package>
+			<package name="arrays">
+				<class name="PrimitiveApe" strategy="extensible">
+					<comment>testing a "comment"</comment>
+					<field name="myByte" type="byte" array="true"/>
+					<field name="myChar" type="char" array="true"/>
+					<field name="myDouble" type="double" array="true"/>
+					<field name="myFloat" type="float" array="true"/>
+					<field name="myLong" type="long" array="true"/>
+					<field name="myInt" type="int" array="true"/>
+					<field name="myBoolean" type="boolean" array="true"/>
+				</class>
+				<class name="MadWrapper" strategy="extensible">
+					<field name="myByte" type="java.lang.Byte" array="true"/>
+					<field name="myChar" type="java.lang.Character" array="true"/>
+					<field name="myDouble" type="java.lang.Double" array="true"/>
+					<field name="myFloat" type="java.lang.Float" array="true"/>
+					<field name="myLong" type="java.lang.Long" array="true"/>
+					<field name="myInt" type="java.lang.Integer" array="true"/>
+					<field name="myBoolean" type="java.lang.Boolean" array="true"/>
+				</class>
+			</package>
+			<package name="synchronization">
+				<class name="RandomBean" strategy="extensibleslave" >
+					<field name="myThing1" type="int" compareOrder="1" synchronized="true"/>
+					<field name="myThing2" type="boolean" compareOrder="2" synchronized="true"/>
+					<field name="myThing3" type="java.lang.Float" compareOrder="3" synchronized="true" />
+					<field name="myThing4" type="java.util.Calendar" compareOrder="4" synchronized="true" />
+					<field name="myArray1" type="com.knapptech.interfaces.Lolo2" array="true" compareOrder="5" synchronized="true" />
+					<field name="myCollection1" synchronized="true">
+						<type>
+							<type>java.util.TreeSet</type>
+							<generictype type="com.knapptech.weird.WeirdComparable"/>
+						</type>
+					</field>
+				</class>
+			</package>
+			<package name="strategies">
+				<class name="RandomBean" strategy="bean">
+					<field name="myThing1" type="int" compareOrder="1"/>
+					<field name="myThing2" type="boolean" compareOrder="2"/>
+					<field name="myThing3" type="java.lang.Float" compareOrder="3" />
+					<field name="myThing4" type="java.util.Calendar" compareOrder="4" />
+					<field name="myArray1" type="com.knapptech.interfaces.Lolo2" array="true" compareOrder="5" />
+					<field name="myCollection1">
+						<type>
+							<type>java.util.TreeSet</type>
+							<generictype type="com.knapptech.weird.WeirdComparable"/>
+						</type>
+					</field>
+				</class>
+				<class name="SemiBean" strategy="bean">
+					<field name="myThing1" type="int" compareOrder="1" immutable="true"/>
+					<field name="myThing2" type="boolean" compareOrder="2" immutable="true"/>
+					<field name="myThing3" type="java.lang.Float" compareOrder="3" nullable="false"/>
+					<field name="myThing4" type="java.util.Calendar" compareOrder="4" />
+					<field name="myArray1" type="com.knapptech.interfaces.Lolo2" array="true" compareOrder="5" />
+					<field name="myCollection1">
+						<type>
+							<type>java.util.TreeSet</type>
+							<generictype type="com.knapptech.weird.WeirdComparable"/>
+						</type>
+					</field>
+				</class>
+				<class name="RockSolid" strategy="immutable">
+					<field name="myThing1" type="int" compareOrder="1" immutable="true"/>
+					<field name="myThing2" type="boolean" compareOrder="2" immutable="true"/>
+					<field name="myThing3" type="java.lang.Float" compareOrder="3" nullable="false"/>
+					<field name="myThing4" type="java.util.Calendar" compareOrder="4" />
+					<field name="myArray1" type="com.knapptech.interfaces.Lolo2" array="true" compareOrder="5" />
+					<field name="myCollection1">
+						<type>
+							<type>java.util.TreeSet</type>
+							<generictype type="com.knapptech.weird.WeirdComparable"/>
+						</type>
+					</field>
+				</class>
+				<class name="RockSolidThing" strategy="immutableandinterface">
+					<field name="myThing1" type="int" compareOrder="1" immutable="true"/>
+					<field name="myThing2" type="boolean" compareOrder="2" immutable="true"/>
+					<field name="myThing3" type="java.lang.Float" compareOrder="3" nullable="false"/>
+					<field name="myThing4" type="java.util.Calendar" compareOrder="4" />
+					<field name="myArray1" type="com.knapptech.interfaces.Lolo2" array="true" compareOrder="5" />
+					<field name="myCollection1">
+						<type>
+							<type>java.util.TreeSet</type>
+							<generictype type="com.knapptech.weird.WeirdComparable"/>
+						</type>
+					</field>
+				</class>
+				<class name="LikaBean" strategy="beanandinterface">
+					<field name="myThing1" type="int" compareOrder="1" immutable="true"/>
+					<field name="myThing2" type="boolean" compareOrder="2" immutable="true"/>
+					<field name="myThing3" type="java.lang.Float" compareOrder="3" nullable="false"/>
+					<field name="myThing4" type="java.util.Calendar" compareOrder="4" />
+					<field name="myArray1" type="com.knapptech.interfaces.Lolo2" array="true" compareOrder="5" />
+					<field name="myCollection1">
+						<type>
+							<type>java.util.TreeSet</type>
+							<generictype type="com.knapptech.weird.WeirdComparable"/>
+						</type>
+					</field>
+				</class>
+				<class name="Awesomeness" strategy="factory">
+					<field name="myThing1" type="int" compareOrder="1" immutable="true"/>
+					<field name="myThing2" type="boolean" compareOrder="2" immutable="true"/>
+					<field name="myThing3" type="java.lang.Float" compareOrder="3" nullable="false"/>
+					<field name="myThing4" type="java.util.Calendar" compareOrder="4" />
+					<field name="myArray1" type="com.knapptech.interfaces.Lolo2" array="true" compareOrder="5" />
+					<field name="myCollection1">
+						<type>
+							<type>java.util.TreeSet</type>
+							<generictype type="com.knapptech.weird.WeirdComparable"/>
+						</type>
+					</field>
+				</class>
+				<class name="OneOfAKind" strategy="managed">
+					<field name="myThing1" type="int" compareOrder="1" immutable="true"/>
+					<field name="myThing2" type="boolean" compareOrder="2" immutable="true"/>
+					<field name="myThing3" type="java.lang.Float" compareOrder="3" nullable="false"/>
+					<field name="myThing4" type="java.util.Calendar" compareOrder="4" key="true"/>
+					<field name="myArray1" type="com.knapptech.interfaces.Lolo2" array="true" compareOrder="5" />
+					<field name="myCollection1">
+						<type>
+							<type>java.util.TreeSet</type>
+							<generictype type="com.knapptech.weird.WeirdComparable"/>
+						</type>
+					</field>
+				</class>
+				<class name="WhenImInTheMood" strategy="locking">
+					<field name="myThing1" type="int" compareOrder="1" immutable="true"/>
+					<field name="myThing2" type="boolean" compareOrder="2" immutable="true"/>
+					<field name="myThing3" type="java.lang.Float" compareOrder="3" nullable="false"/>
+					<field name="myThing4" type="java.util.Calendar" compareOrder="4" />
+					<field name="myArray1" type="com.knapptech.interfaces.Lolo2" array="true" compareOrder="5" />
+					<field name="myCollection1">
+						<type>
+							<type>java.util.TreeSet</type>
+							<generictype type="com.knapptech.weird.WeirdComparable"/>
+						</type>
+					</field>
+				</class>
+				<class name="WhenImInTheMood2" strategy="unlocking">
+					<field name="myThing1" type="int" compareOrder="1" immutable="true"/>
+					<field name="myThing2" type="boolean" compareOrder="2" immutable="true"/>
+					<field name="myThing3" type="java.lang.Float" compareOrder="3" nullable="false"/>
+					<field name="myThing4" type="java.util.Calendar" compareOrder="4" />
+					<field name="myArray1" type="com.knapptech.interfaces.Lolo2" array="true" compareOrder="5" />
+					<field name="myCollection1">
+						<type>
+							<type>java.util.TreeSet</type>
+							<generictype type="com.knapptech.weird.WeirdComparable"/>
+						</type>
+					</field>
+				</class>
+				<class name="Elvis" strategy="singleton">
+					<field name="myThing1" type="int" compareOrder="1" immutable="true"/>
+					<field name="myThing2" type="boolean" compareOrder="2" immutable="true"/>
+					<field name="myThing3" type="java.lang.Float" compareOrder="3" nullable="false"/>
+					<field name="myThing4" type="java.util.Calendar" compareOrder="4" />
+					<field name="myArray1" type="com.knapptech.interfaces.Lolo2" array="true" compareOrder="5" />
+					<field name="myCollection1">
+						<type>
+							<type>java.util.TreeSet</type>
+							<generictype type="com.knapptech.weird.WeirdComparable"/>
+						</type>
+					</field>
+				</class>
+				<class name="Presley" strategy="singletonandinterface">
+					<field name="myThing1" type="int" compareOrder="1" immutable="true"/>
+					<field name="myThing2" type="boolean" compareOrder="2" immutable="true"/>
+					<field name="myThing3" type="java.lang.Float" compareOrder="3" nullable="false"/>
+					<field name="myThing4" type="java.util.Calendar" compareOrder="4" />
+					<field name="myArray1" type="com.knapptech.interfaces.Lolo2" array="true" compareOrder="5" />
+					<field name="myCollection1">
+						<type>
+							<type>java.util.TreeSet</type>
+							<generictype type="com.knapptech.weird.WeirdComparable"/>
+						</type>
+					</field>
+				</class>
+			</package>
+			
+			<package name="weird">
+				<class name="Yoyo" strategy="bean">
+					<field name="len" type="float" />
+					<field name="weight" type="float" nullable="false" />
+					<requiredmethod name="flick"/>
+				</class>
+				<class name="WeirdComparable" strategy="bean">
+					<field name="me" type="double" compareOrder="1">
+						<initializer>10.32</initializer>
+					</field>
+					<field name="cal" type="java.util.Calendar" compareOrder="2">
+						<initializer>Calendar.getInstance()</initializer>
+					</field>
+				</class>
+			</package>
+			<package name="strange">
+				<class name="Thing" >
+					<field name="name" type="java.lang.String" />
+					<requiredmethod name="beWeird">
+						<comment>Makes this thing be weird.</comment>
+					</requiredmethod>
+				</class>
+			</package>
+			<package name="confusing">
+				<class name="RocketScience">
+					<genericparameter representation="WOW">
+						<upperbounds type="com.knapptech.strange.Thing"/>
+					</genericparameter>
+				</class>
+			</package>
+		</package>
+	</package>
+</project>

@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://modelfactory.knapptech.com/ModelDefinition"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="http://modelfactory.knapptech.com/ModelDefinition ../ModelDefinition.xsd" 
+name="Chess">
+	<defaults>
+		<language>java</language>
+		<mergeStrategy>merge</mergeStrategy>
+	</defaults>
+	<package name="com">
+		<package name="knapptech">
+			<package name="chess">
+				<package name="pieces" >
+					<class name="King" >
+						<implements type="com.knapptech.chess.IPiece" />
+						<extends type="com.knapptech.chess.Piece"/>
+					</class>
+					<class name="Queen">
+						<implements type="com.knapptech.chess.IPiece"/>
+						<extends type="com.knapptech.chess.Piece"/>
+					</class>
+					<class name="Bishop">
+						<implements type="com.knapptech.chess.IPiece"/>
+						<extends type="com.knapptech.chess.Piece"/>
+					</class>
+					<class name="Knight">
+						<implements type="com.knapptech.chess.IPiece"/>
+						<extends type="com.knapptech.chess.Piece"/>
+					</class>
+					<class name="Rook">
+						<implements type="com.knapptech.chess.IPiece"/>
+						<extends type="com.knapptech.chess.Piece"/>
+					</class>
+					<class name="Pawn">
+						<implements type="com.knapptech.chess.IPiece"/>
+						<extends type="com.knapptech.chess.Piece"/>
+					</class>
+					
+				</package>
+				<package name="ai">
+					<class name="Evaluator" strategy="extensible" >
+						<requiredmethod name="evaluate" returnType="double">
+							<arguments>
+								<argument name="boardstatus">
+									<type type="com.knapptech.chess.BoardStatus" />
+								</argument>
+							</arguments>
+						</requiredmethod>
+					</class>
+					<class name="RecursiveEvaluator" strategy="factory">
+						<implements type="com.knapptech.chess.ai.IEvaluator"/>
+						<field name="evaluator" immutable="true" type="com.knapptech.chess.ai.IEvaluator"/>
+						<field name="movesAhead" static="true" final="false" visibility="private" type="int"/>
+						<requiredmethod name="getMoveConsiderations" returnType="com.knapptech.chess.ai.MoveConsideration"/>
+					</class>
+					<class name="MoveConsideration" >
+						<field name="currentBoard" type="com.knapptech.chess.BoardStatus" />
+						<field name="currentValue" type="double" />
+						<field name="realValue" type="double"/>
+						<field name="possibleMoves">
+							<type>
+								<type>java.util.HashMap</type>
+								<generictype type="com.knapptech.chess.Move"/>
+								<generictype type="com.knapptech.chess.ai.MoveConsideration"/>
+							</type>
+						</field>
+					</class>
+				</package>
+				<enum name="ChessColor">
+					<enuminstance name="WHITE" />
+					<enuminstance name="BLACK" />
+				</enum>
+				<enum name="PieceType">
+					<enuminstance name="KING" />
+					<enuminstance name="QUEEN" />
+					<enuminstance name="BISHOP" />
+					<enuminstance name="KNIGHT" />
+					<enuminstance name="ROOK" />
+					<enuminstance name="PAWN" />
+				</enum>
+				<class name="PieceID" strategy="immutable" >
+					<field name="type" type="com.knapptech.chess.PieceType" unique="true"/>
+					<field name="color" type="com.knapptech.chess.ChessColor" unique="true" />
+					<field name="startColumn" type="byte" unique="true" />
+				</class>
+				<class name="Piece" abstract="true" strategy="extensible">
+					<comment>This is a piece in general, not considering any current state of a game.</comment>
+					<field name="id" type="com.knapptech.chess.PieceID" />
+					<requiredmethod name="getAttackableSquares" abstract="true">
+						<returnType>
+							<type>java.util.HashSet</type>
+							<generictype type="com.knapptech.chess.Square"/>
+						</returnType>
+						<arguments>
+							<argument name="position" type="com.knapptech.chess.Square"/>
+						</arguments>
+					</requiredmethod>
+					<requiredmethod name="getReachableSquares" abstract="true">
+						<returnType>
+							<type>java.util.HashSet</type>
+							<generictype type="com.knapptech.chess.Square"/>
+						</returnType>
+						<arguments>
+							<argument name="position" type="com.knapptech.chess.Square"/>
+						</arguments>
+					</requiredmethod>
+				</class>
+				<class name="PieceStatus" strategy="immutable" >
+					<comment>This describes the state of a piece considering its position on a board.</comment>
+					<field name="boardStatus" type="com.knapptech.chess.BoardStatus"/>
+					<field name="piece" type="com.knapptech.chess.Piece" />
+					<field name="square" type="com.knapptech.chess.Square" />
+					<requiredmethod name="getAttackableSquares" >
+						<returnType>
+							<type>java.util.HashSet</type>
+							<generictype type="com.knapptech.chess.Square"/>
+						</returnType>
+						<arguments>
+							<argument name="position" type="com.knapptech.chess.Square"/>
+						</arguments>
+					</requiredmethod>
+					<requiredmethod name="getReachableSquares" >
+						<returnType>
+							<type>java.util.HashSet</type>
+							<generictype type="com.knapptech.chess.Square"/>
+						</returnType>
+						<arguments>
+							<argument name="position" type="com.knapptech.chess.Square"/>
+						</arguments>
+					</requiredmethod>
+				</class>
+				<class name="Board">
+					<field name="rows">
+						<type>
+							<type>java.util.ArrayList</type>
+							<generictype type="com.knapptech.chess.BoardRow"/>
+						</type>
+					</field>
+				</class>
+				<class name="BoardRow" strategy="managed" >
+					<field name="number" type="int" key="true" />
+					<field name="squares">
+						<type>
+							<type>java.util.ArrayList</type>
+							<generictype type="com.knapptech.chess.Square"/>
+						</type>
+						<initializer>new ArrayList&lt;Square&gt;(10)</initializer>
+					</field>
+				</class>
+				<class name="BoardColumn" strategy="managed" >
+					<field name="number" type="int" key="true" />
+					<field name="squares">
+						<type>
+							<type>java.util.ArrayList</type>
+							<generictype type="com.knapptech.chess.Square"/>
+						</type>
+					</field>
+				</class>
+				<class name="SquareID" strategy="immutable">
+					<field name="CAPTURED" type="com.knapptech.chess.SquareID" static="true" final="true" visibility="public" />
+					<field name="row" type="int" key="true" />
+					<field name="column" type="int" key="true" />
+				</class>
+				<class name="Square" strategy="managed">
+					<field name="CAPTURED" type="com.knapptech.chess.Square" static="true" final="true" visibility="public" />
+					<field name="id" type="com.knapptech.chess.SquareID" key="true" />
+					<field name="color" type="com.knapptech.chess.ChessColor" settable="false"/>
+					<requiredmethod name="getSquareName" returnType="java.lang.String"/>
+					<requiredmethod name="getRow" returnType="int"/>
+					<requiredmethod name="getColumn" returnType="int"/>
+				</class>
+				<class name="SquareStatus">
+					<field name="square" type="com.knapptech.chess.Square" />
+					<field name="occupant" type="com.knapptech.chess.Piece" />
+					
+				</class>
+				<class name="Game">
+					<field name="white" type="com.knapptech.chess.Player" />
+					<field name="black" type="com.knapptech.chess.Player" />
+					<field name="status" type="com.knapptech.chess.IBoardStatusReadable" />
+					<requiredmethod name="move"/>
+				</class>
+				<class name="BoardStatus" strategy="extensible">
+					<!-- Knows the position of all pieces, and whose turn it is. -->
+					<field name="START" static="true" final="true" visibility="public"
+						type="com.knapptech.chess.BoardStatus">
+						<initializer>new BoardStatus()</initializer>
+					</field>
+					<field name="playersTurn" type="com.knapptech.chess.ChessColor" />
+					<field name="piecePositions">
+						<type>
+							<type>java.util.HashMap</type>
+							<generictype type="com.knapptech.chess.PieceID"/>
+							<generictype type="com.knapptech.chess.PieceStatus"/>
+						</type>
+					</field>
+					<field name="squaresStatus">
+						<type>
+							<type>java.util.HashMap</type>
+							<generictype type="com.knapptech.chess.Square"/>
+							<generictype type="com.knapptech.chess.SquareStatus"/>
+						</type>
+					</field>
+					<requiredmethod name="getPossibleMoves">
+						<returnType>
+							<type>java.util.Set</type>
+							<generictype type="com.knapptech.chess.Move"/>
+						</returnType>
+					</requiredmethod>
+					<requiredmethod name="createFromMove" returnType="com.knapptech.chess.BoardStatus">
+						<arguments>
+							<argument name="move" type="com.knapptech.chess.Move"/>
+						</arguments>
+					</requiredmethod>
+				</class>
+				<class name="Player" strategy="managed">
+					<field name="name" type="java.lang.String" key="true" />
+					<field name="dateOfBirth" type="java.util.Calendar" />
+					<field name="rank" type="int" />
+				</class>
+				<class name="Move">
+					<field name="startSquare" type="com.knapptech.chess.Square" />
+					<field name="endSquare" type="com.knapptech.chess.Square" />
+					<field name="piece" type="com.knapptech.chess.Piece" />
+				</class>
+			</package>
+		</package>
+	</package>
+</project>
