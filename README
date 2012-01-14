@@ -1,4 +1,6 @@
-JModelBuilder
+ *****************
+ * JModelBuilder *
+ *****************
 
 What is JModelBuilder:
 =======================
@@ -78,9 +80,18 @@ Here is a list of what is not supported (remember that you can still add this ma
 - writing view or control style code
 - making coffee for you in the morning
 
+Please Be A Contributor:
+========================
+
+If you make any enhancements to the application, please contribute them back to the community if possible.  Since this is licensed under the Apache license, you're not required to give back modifications, but I strongly encourage you to do so if possible.  By contributing back, other people can extend/enhance your work and re-post it for your own benefit.  
+
+I could definitely use some help developing this application, since it's time consuming and I'm not getting paid.  There is a lot of functionality I want to support but don't currently.  Please email me if you want to be a contributor: michaelscottknapp@gmail.com.  Since I'm not getting paid for this work, enhancements and documentation might not be very thorough.  However, if you want a specific feature added, or something documented, and will donate money I will consider the offer.  Just email me.
+
 Licensing:
 ==========
 
 I chose to use the Apache 2 license for this application.  I chose this over the GPL because I think it's more important for this software to get used than it is to get updates.  I think the world would be a much better place if all software was developed in 30% less time.  Apache will not use any code licensed under GPL, while GPL code is free to use the Apache licensed code.  So I decided to use the Apache license. 
+
+This application is a special case because the product of my code is more code, the apache license does not seem to have any guidance for this situation (though I'm definitely not a legal expert here).  It is my intention that all code that JModelBuilder generates is 100% yours, with no restrictions whatsoever.  Meaning you can sell it, apply your own license to it, redistribute it, or do anything with it you want to, so long as it is otherwise legal.
 
 Copyright 2012, Michael Knapp
