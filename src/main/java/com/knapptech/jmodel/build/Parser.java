@@ -37,8 +37,8 @@ import com.knapptech.jmodel.model.MBProject;
 
 public class Parser {
 	
-	private static String inputPath = "src/main/resources/samples/Chess.xml";
-	private static String outputPath = "product";
+	private static String inputPath;
+	private static String outputPath;
 	private static File inputFile;
 	private static File outputDirectory;
 	private static Element docElement = null;
@@ -52,8 +52,29 @@ public class Parser {
 	}
 
 	public static void main(String[] args) {
+		boolean overwrite = false;
+		if (args.length>0) {
+			inputPath = args[0];
+			if (args.length>1) {
+				outputPath = args[1];
+				if (args.length>2) {
+					overwrite = args[2].trim().toLowerCase().equals("overwrite");
+				}
+			} else {
+				outputPath = "product";
+			}
+		} else {
+			inputPath = "input.xml";
+			outputPath = "product";
+		}
 		inputFile = new File(inputPath);
 		outputDirectory = new File(outputPath);
+		if (outputDirectory.exists() && !overwrite) {
+			System.out.println("The output directory already exists, and the user did not explicitly "+
+					"say to overwrite it.  JModelBuilder is aborting.  If you want to overwrite the directory, "+
+					"then use command arguments: inputxml outputdir overwrite.  Do not substitute \"true\" for overwrite.");
+			System.exit(0);
+		}
 		try {
 			Document d = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(inputFile);
 			String fileText = getFileText(inputFile);

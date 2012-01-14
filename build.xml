@@ -1,0 +1,17 @@
+<project name="JModelBuilder" default="jar">
+	
+	<target name="compile">
+		<delete dir="target/classes"/>
+		<mkdir dir="target/classes"/>
+		<javac srcdir="src/main/java" destdir="target/classes" />
+	</target>
+
+	<target name="jar" depends="compile">
+		<delete dir="target/jmb.jar"/>
+		<jar basedir="target/classes" destfile="target/jmb.jar">
+			<manifest>
+				<attribute name="Main-Class" value="com.knapptech.jmodel.build.Parser"/>
+			</manifest>
+		</jar>
+	</target>
+</project>
