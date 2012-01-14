@@ -1,1 +1,77 @@
-Hello world
+JModelBuilder
+
+Copyright 2012, Michael Knapp
+
+What is JModelBuilder:
+=======================
+
+It's a java tool that automatically creates java model code for a developer, while providing the developer a lot of control over what's generated.  The developer must start by writing an xml file that follows the JModelBuilder schema.  Once that's written, running the application with that file for input will generate a java project with all of the required classes for your java data model.  The application is designed to give the developer A LOT of control over how the classes are generated, and to provide an easy method to extend it.  So if you are thinking: "this is nice but I don't want java beans, I need my classes written a certain special way."  don't stop reading!  This application is primarily meant to give you a ton of control over what's generated, while still dramatically reducing the time it takes to develop your java project.
+
+The real power of this tool comes from its ability to generate code based on different strategies, and from its extensibility.  For example, sometimes you want a java bean (aka POJO), sometimes a factory, sometimes a singleton, sometimes an immutable class, a thread-safe class, etc. etc.  This tool supports writing classes based on all of these strategies, and if you want your classes to be written by a strategy that does not exist, you can easily create your own strategy.  The JModelBuilder code is designed to be extended with new strategies very easily.  What's more, you are not restricted to generating one class from one class definition in your xml.  Instead, you can write one class definition in the xml, and the strategy can create any number of classes and interfaces for you.  For example, you might want a class interface, as well as an abstract implementation, as well as a skeleton implementation.  There is a strategy to use that will generate that.  One strategy called "extensible" will generate a read-only interface, a mutable interface, a class bean, and an immutable class for you.  All of this code was generated from a few small lines of xml, so you can see that this application can seriously save you a lot of development time.
+
+The purpose of this application is more or less to give the developer a big head start, and to dramatically reduce the time it takes to develop a java project.  It cannot write the whole application for you, because it is limited to java classes that more or less act like a data model component.  JModelBuilder cannot write your "view" or "control" style code.  It's expected that the developer will start their java project with this tool, and after they get the classes generated, go back and add any functions to the classes you want.  I do expect the code generated to compile immediately, but I don't expect it to fill your needs immediately.  For example, if you wrote a class called "Rectangle", it would have fields for width and height.  The class would already have equals and hashcode implemented, and if you tell it to, compareTo as well.  It could have implemented IRectangle, and extended AbstractRectangle.  If IRectangle requires the method "computeArea", there would be a method stub in your class, and it would have one line of code: "return 0;".  So you see that the developer will have to go back and fill in code for some methods.
+
+It's also worth noting, if you put junk in, you will get junk out.  JModelBuilder will generate code that compiles, assuming your xml definition makes sense.  When it does not, the output is undetermined.  In most cases, it will still generate the code for you, but the generated code will not compile.  For example, if you define a field in your xml that is abstract and final, the xml is not going to display any errors.  Obviously, it's impossible to have an abstract final field, so that input is invalid.  The application's response to this is undefined, it might generate the code, or it might throw an exception when you run the application.  If it does generate the code, that code will not compile.  JModelBuilder will not try to interpret what the developer meant to do, because it could easily misinterpret what they wanted.  With that noted, there are many many ways that you could write your xml document that appear valid, but are not, so the onus is on the developer to understand how to write java that will compile.  In some cases, JModelBuilder will output information to the console that will help you find the error in your xml, this is especially useful for naming mistakes.
+
+Demonstration:
+==============
+
+A great way to really find out what this is capable of is to run it and see the output.  Navigate in a command utility to the directory that holds the JModelBuilder jar "jmb.jar".  Copy in an xml file that follows the schema definition, you can find samples in src/main/resources/samples.  Then from the command line do this:
+
+java jmb.jar myInput.xml myOutput
+
+The application should run using your input xml file and generating all code to the directory "myOutput".  After that, you can view the files generated. 
+
+How To Use:
+===========
+
+The developer must write an xml file to the JModelBuilder schema.  The schema is mostly intuitive.  I'm going to write a separate document about how to do this.  You can also look at the example xml files found in src/main/resources/samples.  You could copy one of those and make all the modifications you like to get your own file.
+
+How To Extend With Your Own Strategy:
+=====================================
+
+Extending is accomplished by writing your own class that implements "com.knapptech.jmodel.build.strategic.IStrategicClassParser".  The easiest way to do this is to extend the abstract version, StrategicClassParser.  I'm going to write a separate document for this topic.  Check back later.
+
+
+
+So What Code Generation Is Supported?
+======================================
+
+JModelBuilder cannot write code for all things possible in java, but it does support code generation of practically everything you would want it to.  Here is a list of some functionality that is supported:
+
+- generating classes
+- generating interfaces
+- generating packages
+- generating enums
+- generating whole projects
+- automatic overriding of equals and hashcode
+- automatic generation of compareTo
+- automatic creation of getters and setters
+- generating inner classes
+- generating inner enums
+- generating inner interfaces
+- using all types of existing classes on the class path
+- automatic detection and inclusion of required import statements
+- javadoc comments (can be written in the xml)
+- method stub requirements
+- inheritance by classes and interfaces
+- abstract classes
+- all levels of accessability
+- synchronized code
+- static methods and fields
+- generating constructors, fields, methods, etc.
+- generating classes based on a strategy such as "immutable", "bean", "singleton", and many more
+- extending JModelBuilder with your own strategies
+
+Here is a list of what is not supported (remember that you can still add this manually after the code is generated):
+
+- anonymous inner classes
+- static imports (but it does support the non-static ones)
+- Annotations (don't currently plan to support it, but maybe if enough people ask for it)
+- writing view or control style code
+- making coffee for you in the morning
+
+Licensing:
+==========
+
+I chose to use the Apache 2 license for this application.  I chose this over the GPL because I think it's more important for this software to get used than it is to get updates.  I think the world would be a much better place if all software was developed in 30% less time.  Apache will not use any code licensed under GPL, while GPL code is free to use the Apache licensed code.  So I decided to use the Apache license. 
